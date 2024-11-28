@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Sidebar</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome CDN -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.imgur.com/JUurM9P.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-direction: column;
+        }
+
+        /* Overlay for background blur */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px); /* Apply blur effect */
+            z-index: 998;
+            display: none; /* Initially hidden */
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px; /* Initially off the screen */
+            width: 300px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px); /* Background blur */
+            padding: 20px;
+            z-index: 999;
+            overflow-y: auto;
+            transition: left 0.5s ease; /* Smooth transition */
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            margin: 15px 0;
+            font-size: 16px;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeInLinks 0.5s ease-out forwards;
+        }
+
+        .sidebar i {
+            font-size: 30px; /* Icon size */
+            margin-right: 15px;
+        }
+
+        /* Push Button Styling */
+        .push-btn {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid #000;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            position: fixed;
+            bottom: 70px; /* Ajustado para subir o botão */
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeInBounce 2s ease-out infinite; /* Smoothed the bounce animation */
+        }
+
+        /* Hover effects for Sidebar Links */
+        .sidebar a:hover {
+            color: #f44336;
+            transform: scale(1.1);
+            transition: 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeInLinks {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInBounce {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+            25% {
+                transform: translateX(-50%) scale(1.05);
+            }
+            50% {
+                transform: translateX(-50%) scale(1);
+            }
+            75% {
+                transform: translateX(-50%) scale(1.05);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        /* Contract Popup Styling */
+        .contract-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            width: 80%;
+            max-width: 600px;
+            display: none; /* Hidden by default */
+            z-index: 1001;
+            max-height: 80%; /* Limit max height */
+            overflow-y: auto; /* Allow scrolling if content overflows */
+        }
+
+        .contract-popup button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .contract-popup button:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Highlighted "Show Contract" Button */
+        #showContractBtn {
+            background-color: #ff9800; /* Highlight color */
+            border: 2px solid #ff5722;
+            color: white;
+            font-size: 18px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #showContractBtn:hover {
+            background-color: #ff5722;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Push Button to Open Sidebar -->
+    <button class="push-btn" id="pushBtn">PuSHHH</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <a href="https://youtube.com/@dogtb?si=qn6kecURvFc0GJj4">
+            <i class="fab fa-youtube"></i> YouTube
+        </a>
+        <a href="https://coinmarketcap.com/dexscan/ton/EQDnbTXdeVhLQ_OrGsDoFi9UaexmKhoJAptIvulm_Pi847_p/">
+            <i class="fas fa-dollar-sign"></i> CoinMarketCap
+        </a>
+        <a href="https://www.instagram.com/dogturbo.oficial?igsh=OTE0YmkwN2d3YWo=">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="https://dexscreener.com/ton/eqdnbtxdevhlq_orgsdofi9uaexmkhojaptivulm_pi847_p">
+            <i class="fas fa-chart-line"></i> Dex Screener
+        </a>
+        <a href="https://t.me/blum/app?startapp=memepadjetton_DOGTB_MstqT-ref_LHAmWKFsZv">
+            <i class="fas fa-shopping-cart"></i> BUY $DOGTB
+        </a>
+        <a href="https://ton.org">
+            <i class="fas fa-globe"></i> Explorer
+        </a>
+        <a href="javascript:void(0)" id="showContractBtn">
+            <i class="fas fa-file-contract"></i> Show Contract
+        </a>
+    </div>
+
+    <!-- Contract Popup -->
+    <div class="contract-popup" id="contractPopup">
+        <h2>Contract Details</h2>
+        <p>EQC0kiPZcwA9lGQ7N7wMGld8pOVVnvToOS1i4whtSO2KHB2d</p> <!-- Adicionado o conteúdo aqui -->
+        <button id="closeContractBtn">Close</button>
+    </div>
+
+    <!-- Overlay for background blur -->
+    <div class="overlay" id="overlay"></div>
+
+    <script>
+        const pushBtn = document.getElementById('pushBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const showContractBtn = document.getElementById('showContractBtn');
+        const contractPopup = document.getElementById('contractPopup');
+        const closeContractBtn = document.getElementById('closeContractBtn');
+
+        pushBtn.addEventListener('click', () => {
+            sidebar.style.left = '0';
+            overlay.style.display = 'block';
+            pushBtn.style.display = 'none';
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.style.left = '-300px';
+            overlay.style.display = 'none';
+            pushBtn.style.display = 'block';
+        });
+
+        showContractBtn.addEventListener('click', () => {
+            contractPopup.style.display = 'block';
+        });
+
+        closeContractBtn.addEventListener('click', () => {
+            contractPopup.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
