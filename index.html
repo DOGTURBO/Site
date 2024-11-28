@@ -25,7 +25,6 @@
             position: relative;
         }
 
-        /* Overlay for background blur */
         .overlay {
             position: fixed;
             top: 0;
@@ -38,7 +37,6 @@
             display: none;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             position: fixed;
             top: 0;
@@ -83,7 +81,6 @@
             width: 200px;
         }
 
-        /* PuSHHH Button Styling */
         .push-btn {
             position: fixed;
             bottom: 10%;
@@ -106,7 +103,6 @@
             background-color: #e68a00;
         }
 
-        /* Pulsing animation for PuSHHH button */
         @keyframes pulse {
             0%, 100% {
                 transform: translateX(-50%) scale(1);
@@ -116,7 +112,6 @@
             }
         }
 
-        /* Flying image animation */
         .flying-image {
             position: absolute;
             width: 100px;
@@ -145,7 +140,6 @@
             }
         }
 
-        /* Responsive adjustments */
         @media (min-width: 768px) {
             .push-btn {
                 bottom: 23%;
@@ -180,6 +174,7 @@
         const pushBtn = document.getElementById('pushBtn');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
+        const showContractBtn = document.getElementById('showContract');
 
         pushBtn.addEventListener('click', () => {
             sidebar.style.left = '0';
@@ -191,6 +186,10 @@
             sidebar.style.left = '-300px';
             overlay.style.display = 'none';
             pushBtn.style.display = 'block';
+        });
+
+        showContractBtn.addEventListener('click', () => {
+            alert("Contract Adress: EQC0KIPZCWA9LGQ7N7WMGLD8POVVNVTOOS1I4WHTSO2KHB2D");
         });
     </script>
 </body>
